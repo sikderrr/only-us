@@ -50,3 +50,38 @@
 @keyframes ludo-roll{0%{transform:rotate(-12deg) scale(.84)}65%{transform:rotate(8deg) scale(1.08)}100%{transform:rotate(0) scale(1)}}
 @media(max-width:380px){.ludo-panel{padding:13px 10px}.ludo-player{gap:5px;padding:7px}.ludo-avatar{width:29px;height:29px}.ludo-token-count{font-size:7px}.ludo-board-shell{padding:4px;border-radius:16px}}
 @media(prefers-reduced-motion:reduce){.ludo-die.rolled,.ludo-token.playable circle:first-child{animation:none}}
+/* Responsive polish: keep the brand visible, reachable, and safe-area aware. */
+html,body,#root{width:100%;min-width:320px;min-height:100%;overflow-x:clip}
+.shell{min-height:100dvh;overflow-x:clip;overflow-y:visible;padding-top:max(12px,env(safe-area-inset-top));padding-right:max(12px,env(safe-area-inset-right));padding-bottom:max(12px,env(safe-area-inset-bottom));padding-left:max(12px,env(safe-area-inset-left))}
+.top{min-height:48px;justify-content:center}
+.brand-home{min-height:44px;padding:5px 12px;border:0;background:transparent;cursor:pointer}
+.brand-home:focus-visible,.social-brand:focus-visible{outline:3px solid #d984a0;outline-offset:3px;border-radius:12px}
+.content{width:min(100%,720px);min-width:0;padding:clamp(12px,3vw,20px) 0}
+.panel{max-width:100%;min-width:0}
+.social-shell,.social-main,.social-view{min-width:0;max-width:100%;overflow-x:clip}
+@media(max-width:580px){
+ .shell{padding-left:max(10px,env(safe-area-inset-left));padding-right:max(10px,env(safe-area-inset-right))}
+ .content{width:100%;padding:10px 0}
+ .panel{border-radius:20px;padding:clamp(16px,5vw,24px)}
+ .compact{padding:clamp(17px,5vw,24px)}
+ .gamepanel{padding:17px 14px}
+ .action-row{gap:7px}
+ .action-row .button{min-width:0;padding-inline:7px;font-size:11px}
+ .chat-messages{height:min(32dvh,225px);min-height:150px}
+ .tat-game-wrap,.ludo-game-wrap{min-width:0;max-width:100%}
+ .tat-panel{padding:17px 13px}
+ .ludo-board-shell{width:100%;max-width:100%}
+ .social-mobile-top{padding-top:max(5px,env(safe-area-inset-top));padding-left:max(14px,env(safe-area-inset-left));padding-right:max(14px,env(safe-area-inset-right))}
+ .social-mobile-top .mobile-user{display:none}
+ .social-mobile-top{justify-content:center}
+ .social-main{padding-bottom:calc(16px + env(safe-area-inset-bottom))}
+ .social-bottom-nav{padding-bottom:max(5px,env(safe-area-inset-bottom))}
+}
+@media(max-width:360px){
+ .panel h1{font-size:40px}
+ .panel h2{font-size:26px}
+ .welcome{padding-inline:15px}
+ .create-game-option{gap:8px;padding:10px}
+ .room-profile-chip{gap:8px;padding:10px}
+}
+@media(prefers-reduced-motion:reduce){.brand-home,.social-brand{transition:none}}
