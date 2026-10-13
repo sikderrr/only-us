@@ -1,6 +1,6 @@
 # Only Us
 
-Only Us is a private, two-player Truth or Dare game for long-distance couples. Phase 1 includes five prompt categories, a ready lobby, synchronized turns, skip-without-penalty, score tracking, a session summary and rematches. Prompt text is bundled locally. There are no other games, chat, uploads or public profiles.
+Only Us is a private, two-player Truth or Dare game for long-distance couples. Phase 1 includes five prompt categories, a one-tap start lobby once both players have joined, synchronized turns, skip-without-penalty, score tracking, a session summary and rematches. Prompt text is bundled locally. There are no other games, chat, uploads or public profiles.
 
 ## Local development
 
@@ -38,6 +38,6 @@ The included workflow builds and publishes on pushes to the repository's default
 
 ## Security and current limits
 
-Database functions enforce authenticated membership, room capacity, room expiry, readiness, turn ownership, score award-once behavior, prompt selection and room-specific access to private Realtime topics. Room-code collisions are rejected by a primary-key constraint and retried by the client. This is a prototype security design, not an independently audited production security claim. Presence indicates channel connection; the member list reports persistent membership and not verified device reachability. Anonymous auth rate limiting and abuse controls should be configured before a public launch.
+Database functions enforce authenticated membership, room capacity, room expiry, the two-player start gate, turn ownership, score award-once behavior, prompt selection and room-specific access to private Realtime topics. After both players join, either player can start the shared game with one tap. Room-code collisions are rejected by a primary-key constraint and retried by the client. This is a prototype security design, not an independently audited production security claim. Presence indicates channel connection; the member list reports persistent membership and not verified device reachability. Anonymous auth rate limiting and abuse controls should be configured before a public launch.
 
 No live Supabase project credentials are included. Therefore remote room creation, RLS policies, Realtime authorization, two-device synchronization and scheduled cleanup have not been integration-tested here.
