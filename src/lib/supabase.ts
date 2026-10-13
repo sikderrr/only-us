@@ -5,4 +5,20 @@ export type Player={id:string;name:string;avatar:string;ready:boolean;connected:
 export type State={room_code:string;status:'lobby'|'playing'|'finished';players:Player[];turn_index:number;round:number;scores:number[];category:string;prompt_kind:string|null;prompt_id:string|null;prompt_text:string|null;prompt_category:string|null;prompt_player:number|null;prompt_done:boolean;recent_ids:string[]};
 export async function ensureAuth(){if(!supabase)throw Error('Add your Supabase URL and anon key to connect.');const{data,error}=await supabase.auth.getSession();if(error)throw error;if(!data.session){const result=await supabase.auth.signInAnonymously();if(result.error)throw result.error;} }
 export async function rpc<T>(name:string,args:Record<string,unknown>):Promise<T>{if(!supabase)throw Error('Supabase is not configured yet. Add the two VITE_SUPABASE environment variables.');const{data,error}=await supabase.rpc(name,args);if(error)throw error;return data as T;}
-export function friendlyError(error:unknown){const msg=error instanceof Error?error.message:String(error);if(/invalid|not found/i.test(msg))return'That room code did not work. Double-check it and try again.';if(/full|two players/i.test(msg))return'This room already has two players.';if(/started/i.test(msg))return'This room has already started.';if(/expired/i.test(msg))return'This room has expired.';if(/ready/i.test(msg))return'Both hearts need to be ready before the game begins.';return msg;}
+export function friendlyError(error:unknown){
+ let msg='Something went wrong while updating your room. Please try again.';
+ if(typeof error==='string')msg=error;
+ else if(error instanceof Error)msg=error.message;
+ else if(error&&typeof error==='object'){
+  const detail=error as {message?:unknown;details?:unknown;hint?:unknown};
+  const parts=[detail.message,detail.details,detail.hint].filter((part):part is string=>typeof part==='string'&&part.trim().length>0);
+  if(parts.length)msg=parts.join(' ');
+ }
+ if(/invalid|not found/i.test(msg))return'That room code did not work. Double-check it and try again.';
+ if(/full|two players/i.test(msg))return'This room already has two players.';
+ if(/started/i.test(msg))return'This room has already started.';
+ if(/expired/i.test(msg))return'This room has expired.';
+ if(/ready/i.test(msg))return'Both hearts need to be ready before the game begins.';
+ if(/unauthorized|membership|permission|jwt/i.test(msg))return'Your room connection needs a refresh. Please reload and try again.';
+ return msg;
+}
