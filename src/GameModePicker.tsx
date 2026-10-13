@@ -10,7 +10,7 @@ export default function GameModePicker({state,userId,busy,onChoose}:Props){
   const category=state.this_that_category??'all';
   const select=(mode:'truth_or_dare'|'this_or_that',count:5|10|20=rounds,filter:'all'|'Romantic'|'Funny'|'Random'=category)=>onChoose(mode,count,filter);
   return <section className="game-mode-picker" aria-labelledby="game-picker-title">
-    <div className="game-picker-heading"><span className="social-kicker">PICK YOUR LITTLE ADVENTURE</span><h2 id="game-picker-title">What shall we play?</h2><p>Choose together before you start your room.</p></div>
+    <div className="game-picker-heading"><span className="social-kicker">PICK YOUR LITTLE ADVENTURE</span><h2 id="game-picker-title">What shall we play?</h2><p>You can change the game before starting.</p></div>
     <div className="game-mode-cards">
       <button type="button" className={`game-mode-card ${game==='truth_or_dare'?'chosen':''}`} disabled={!host||state.players.length!==2||busy} onClick={()=>select('truth_or_dare')} aria-pressed={game==='truth_or_dare'}>
         <span className="game-mode-icon">💌</span><span><b>Truth or Dare</b><small>Write sweet prompts for each other</small></span>{game==='truth_or_dare'&&<Heart size={16} fill="currentColor"/>}
