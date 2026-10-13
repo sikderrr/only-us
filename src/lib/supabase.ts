@@ -2,7 +2,7 @@ import {createClient} from'@supabase/supabase-js';
 const url=import.meta.env.VITE_SUPABASE_URL as string|undefined;const key=import.meta.env.VITE_SUPABASE_ANON_KEY as string|undefined;
 export const configured=Boolean(url&&key);export const supabase=configured?createClient(url!,key!,{auth:{persistSession:true,autoRefreshToken:true}}):null;
 export type Player={id:string;name:string;avatar:string;ready:boolean;connected:boolean};
-export type State={room_code:string;status:'lobby'|'playing'|'finished';players:Player[];turn_index:number;round:number;scores:number[];category:string;prompt_kind:string|null;prompt_id:string|null;prompt_text:string|null;prompt_category:string|null;prompt_player:number|null;prompt_done:boolean;recent_ids:string[]};
+export type State={room_code:string;status:'lobby'|'playing'|'finished';players:Player[];turn_index:number;round:number;scores:number[];category:string;prompt_kind:string|null;prompt_id:string|null;prompt_text:string|null;prompt_category:string|null;prompt_player:number|null;prompt_response:string|null;prompt_done:boolean;recent_ids:string[]};
 export async function ensureAuth(){if(!supabase)throw Error('Add your Supabase URL and anon key to connect.');const{data,error}=await supabase.auth.getSession();if(error)throw error;if(!data.session){const result=await supabase.auth.signInAnonymously();if(result.error)throw result.error;} }
 export async function rpc<T>(name:string,args:Record<string,unknown>):Promise<T>{if(!supabase)throw Error('Supabase is not configured yet. Add the two VITE_SUPABASE environment variables.');const{data,error}=await supabase.rpc(name,args);if(error)throw error;return data as T;}
 export function friendlyError(error:unknown){

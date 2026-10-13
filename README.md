@@ -30,7 +30,7 @@ Never put a service-role key in this file or any browser environment variable. W
 4. Set the same URL and public anon/publishable key in local `.env.local` and the GitHub Actions repository secrets `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`.
 5. Schedule `public.onlyus_cleanup_expired()` daily using Supabase Cron (or your own scheduled SQL invocation). It deletes expired rooms and cascades player membership. Rooms expire 24 hours after creation and rematch renews that window. Supabase Auth anonymous accounts are managed by Supabase; configure its Auth cleanup policy to remove stale anonymous users if desired.
 
-The app stores only room code/status, names, emoji, readiness, scores, turn/prompt state and a short recent-prompt history. Names and scores are removed with an expired room. No message history is stored. Anonymous auth users may persist after a room expires; follow Supabase's anonymous-user cleanup guidance for your project.
+The app stores only room code/status, names, emoji, readiness, scores, turn/prompt state, an optional answer (up to 500 characters) for the current Truth prompt and a short recent-prompt history. A shared answer is visible to both room members and is cleared when the prompt advances, is skipped, or the room is rematched. Names, answers and scores are removed with an expired room. No message history is stored. Anonymous auth users may persist after a room expires; follow Supabase's anonymous-user cleanup guidance for your project.
 
 ## GitHub Pages
 
